@@ -1,0 +1,16 @@
+## Interface: 50300
+## Author: p3lim
+## Version: Alpha
+## Title: pActionBar
+## Notes: Yet another action bar addon
+
+Core.lua
+
+modules\Blizzard.lua
+modules\Cooldowns.lua
+modules\Bindings.lua
+
+bars\ActionBar.lua
+bars\Override.lua
+bars\Pet.lua
+bars\Extra.lua
