@@ -35,6 +35,9 @@ local function SkinButton(name, size)
 	local Hotkey = _G[name .. 'HotKey']
 	local CheckedTexture = Button:GetCheckedTexture()
 	if(size) then
+		Button.cooldown:SetSize(size or 28, size or 28)
+		Button.cooldown:SetAllPoints()
+
 		Hotkey:SetAlpha(0)
 
 		hooksecurefunc(Button, 'SetNormalTexture', PersistentNormalTexture)
