@@ -21,7 +21,9 @@ local function UpdateButton(self)
 end
 
 local function PersistentNormalTexture(self, texture)
-	self:SetNormalTexture(nil)
+	if(texture) then
+		self:SetNormalTexture(nil)
+	end
 end
 
 local function SkinButton(name, size)
