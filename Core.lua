@@ -39,7 +39,6 @@ local function SkinButton(name, size)
 
 		hooksecurefunc(Button, 'SetNormalTexture', PersistentNormalTexture)
 
-		CheckedTexture.SetAlpha = null
 		CheckedTexture:SetTexture(0, 1/2, 1, 1/3)
 		CheckedTexture:ClearAllPoints()
 		CheckedTexture:SetPoint('TOPRIGHT', -1, -1)
