@@ -20,3 +20,18 @@ end
 
 PetActionBarFrame:SetParent(Parent)
 PetActionBarFrame:EnableMouse(false)
+
+hooksecurefunc('PetActionBar_Update', function(self)
+	for index = 1, NUM_PET_ACTION_SLOTS do
+		local Button = _G['PetActionButton' .. index]
+
+		local _, _, _, _, _, _, autoCastEnabled = GetPetActionInfo(index)
+		if(autoCastEnabled) then
+			AutoCastShine_AutoCastStop(_G['PetActionButton' .. index .. 'Shine'])
+
+			Button:SetBackdropBorderColor(1, 1, 0)
+		else
+			Button:SetBackdropBorderColor(0, 0, 0)
+		end
+	end
+end)

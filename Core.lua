@@ -47,7 +47,6 @@ local function SkinButton(name, size)
 		CheckedTexture:SetPoint('TOPRIGHT', -1, -1)
 		CheckedTexture:SetPoint('BOTTOMLEFT', 1, 1)
 
-		_G[name .. 'Shine']:SetSize(size * 0.9, size * 0.9)
 		_G[name .. 'AutoCastable']:SetAlpha(0)
 	else
 		Hotkey:ClearAllPoints()
