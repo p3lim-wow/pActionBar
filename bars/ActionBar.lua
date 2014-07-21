@@ -10,13 +10,13 @@ Parent:SetSize(396, 33)
 RegisterStateDriver(Parent, 'visibility', '[petbattle][overridebar][vehicleui][possessbar,@vehicle,exists] hide; show')
 
 local visibleButtons = {}
-for _, button in pairs(actionButtons) do
+for _, button in next, actionButtons do
 	visibleButtons[button] = true
 end
 
 local function UpdatePosition()
 	local barIndex = 1
-	for _, buttonName in pairs(actionButtons) do
+	for _, buttonName in next, actionButtons do
 		if(visibleButtons[buttonName]) then
 			for index = 1, NUM_ACTIONBAR_BUTTONS do
 				local Button = _G[buttonName .. index]
@@ -39,13 +39,13 @@ local function UpdatePosition()
 	end
 end
 
-for _, frame in pairs({
+for _, frame in next, {
 	'MainMenuBarArtFrame',
 	'MultiBarBottomLeft',
 	'MultiBarBottomRight',
 	'MultiBarRight',
 	'MultiBarLeft',
-}) do
+} do
 	_G[frame]:SetParent(Parent)
 	_G[frame]:EnableMouse(false)
 end

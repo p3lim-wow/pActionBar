@@ -3,7 +3,7 @@ Hider:Hide()
 
 local function null() end
 
-for _, frame in pairs({
+for _, frame in next, {
 	'MainMenuBar',
 	'MainMenuBarPageNumber',
 	'ActionBarDownButton',
@@ -32,12 +32,12 @@ for _, frame in pairs({
 	'CharacterBag2Slot',
 	'CharacterBag3Slot',
 	'StanceBarFrame',
-}) do
+} do
 	_G[frame]:SetParent(Hider)
 	_G[frame].SetParent = null
 end
 
-for _, texture in pairs({
+for _, texture in next, {
 	'StanceBarLeft',
 	'StanceBarMiddle',
 	'StanceBarRight',
@@ -51,11 +51,11 @@ for _, texture in pairs({
 	'MainMenuBarTexture3',
 	'MainMenuBarLeftEndCap',
 	'MainMenuBarRightEndCap',
-}) do
+} do
 	_G[texture]:SetTexture(nil)
 end
 
-for _, texture in pairs({
+for _, texture in next, {
 	'_BG',
 	'EndCapL',
 	'EndCapR',
@@ -70,6 +70,6 @@ for _, texture in pairs({
 	'ButtonBGL',
 	'ButtonBGR',
 	'_ButtonBGMid',
-}) do
+} do
 	OverrideActionBar[texture]:SetAlpha(0)
 end

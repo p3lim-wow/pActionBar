@@ -24,7 +24,7 @@ end
 local Handler = CreateFrame('Frame')
 Handler:RegisterEvent('ACTIONBAR_UPDATE_COOLDOWN')
 Handler:SetScript('OnEvent', function()
-	for Cooldown in pairs(active) do
+	for Cooldown in next, active do
 		local Parent = Cooldown:GetParent()
 		local Timer = Cooldown.Timer
 
@@ -60,7 +60,7 @@ local function RegisterCooldown(self)
 end
 
 if(ActionBarButtonEventsFrame.frames) then
-	for index, frame in pairs(ActionBarButtonEventsFrame.frames) do
+	for index, frame in next, ActionBarButtonEventsFrame.frames do
 		RegisterCooldown(frame)
 	end
 end
