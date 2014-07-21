@@ -23,6 +23,7 @@ end
 
 local Handler = CreateFrame('Frame')
 Handler:RegisterEvent('ACTIONBAR_UPDATE_COOLDOWN')
+Handler:RegisterEvent('PLAYER_LOGIN')
 Handler:SetScript('OnEvent', function()
 	for Cooldown in next, active do
 		local Parent = Cooldown:GetParent()
