@@ -14,6 +14,7 @@ local function CleanKey(key)
 end
 
 local Handler = CreateFrame('Frame')
+Handler:RegisterEvent('PLAYER_LOGIN')
 Handler:RegisterEvent('UPDATE_BINDINGS')
 Handler:SetScript('OnEvent', function()
 	for _, button in next, actionButtons do
