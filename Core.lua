@@ -9,6 +9,18 @@ local BACKDROP = {
 
 local function null() end
 
+local Handler = CreateFrame('Frame')
+Handler:RegisterEvent('PLAYER_LOGIN')
+Handler:SetScript('OnEvent', function()
+	SetCVar('lockActionBars', 1)
+	SetCVar('alwaysShowActionBars', 0)
+	SetCVar('secureAbilityToggle', 1)
+
+	if(WoD) then
+		SetCVar('countdownForCooldowns', 0)
+	end
+end)
+
 local function UpdateButton(self)
 	local Button = self:GetParent()
 	local action = Button.action
