@@ -22,3 +22,13 @@ end
 OverrideActionBar:SetParent(Parent)
 OverrideActionBar:EnableMouse(false)
 OverrideActionBar:SetScript('OnShow', nil)
+
+local LeaveButton = CreateFrame('Button', 'pOverrideBarLeave', Parent, 'ActionButtonTemplate, SecureActionButtonTemplate')
+LeaveButton:SetPoint('RIGHT', _G['OverrideActionBarButton' .. NUM_OVERRIDE_BUTTONS], 20, 0)
+LeaveButton:SetAttribute('type', 'macro')
+LeaveButton:SetAttribute('macrotext', '/leavevehicle')
+
+SkinButton(LeaveButton, nil, true)
+
+LeaveButton.icon:SetTexture([[Interface\Vehicles\UI-Vehicles-Button-Exit-Up]])
+LeaveButton.icon:SetTexCoord(1/5, 4/5, 1/5, 4/5)

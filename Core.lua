@@ -40,14 +40,14 @@ local function PersistentNormalTexture(self, texture)
 	end
 end
 
-local function SkinButton(Button, size)
+local function SkinButton(Button, size, leaveButton)
 	local name = Button:GetName()
 	Button:SetSize(size or 28, size or 28)
 	Button:SetBackdrop(BACKDROP)
 	Button:SetBackdropBorderColor(0, 0, 0)
 
 	local HotKey = WoD and Button.HotKey or _G[name .. 'HotKey']
-	local CheckedTexture = Button:GetCheckedTexture()
+	local CheckedTexture = not leaveButton and Button:GetCheckedTexture()
 	if(size) then
 		Button.cooldown:SetSize(size or 28, size or 28)
 		Button.cooldown:SetAllPoints()
@@ -71,7 +71,9 @@ local function SkinButton(Button, size)
 		NormalTexture:SetTexture(nil)
 		hooksecurefunc(NormalTexture, 'SetVertexColor', UpdateButton)
 
-		CheckedTexture:SetTexture(nil)
+		if(CheckedTexture) then
+			CheckedTexture:SetTexture(nil)
+		end
 	end
 
 	local Count = WoD and Button.Count or _G[name .. 'Count']
