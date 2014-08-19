@@ -95,6 +95,12 @@ local function SkinButton(Button, size)
 	HighlightTexture:SetPoint('TOPRIGHT', -1, -1)
 	HighlightTexture:SetPoint('BOTTOMLEFT', 1, 1)
 
+	local Flash = WoD and Button.Flash or _G[name .. 'Flash']
+	Flash:SetTexture(1, 0, 0, 1/3)
+	Flash:ClearAllPoints()
+	Flash:SetPoint('TOPRIGHT', -1, -1)
+	Flash:SetPoint('BOTTOMLEFT', 1, 1)
+
 	local FloatingBG = _G[name .. 'FloatingBG']
 	if(FloatingBG) then
 		FloatingBG:Hide()
