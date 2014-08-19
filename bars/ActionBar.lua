@@ -29,7 +29,7 @@ local function UpdatePosition()
 				end
 
 				if(not Button.Skinned) then
-					SkinButton(buttonName .. index)
+					SkinButton(Button)
 				end
 			end
 

@@ -1,4 +1,5 @@
-local actionButtons = select(2, ...).actionButtons
+local _, ns = ...
+local actionButtons = ns.actionButtons
 
 local gsub = string.gsub
 local function CleanKey(key)
@@ -17,12 +18,13 @@ local Handler = CreateFrame('Frame')
 Handler:RegisterEvent('PLAYER_LOGIN')
 Handler:RegisterEvent('UPDATE_BINDINGS')
 Handler:SetScript('OnEvent', function()
-	for _, button in next, actionButtons do
+	for _, name in next, actionButtons do
 		for index = 1, NUM_ACTIONBAR_BUTTONS do
-			if(_G[button .. index]) then
-				local Hotkey = _G[button .. index .. 'HotKey']
-				if(Hotkey) then
-					Hotkey:SetText(CleanKey(Hotkey:GetText()) or '')
+			local Button = _G[name .. index]
+			if(Button) then
+				local HotKey = ns.WoD and Button.HotKey or _G[name .. index .. 'HotKey']
+				if(HotKey) then
+					HotKey:SetText(CleanKey(HotKey:GetText()) or '')
 				end
 			end
 		end

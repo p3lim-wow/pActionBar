@@ -16,7 +16,7 @@ for index = 1, NUM_OVERRIDE_BUTTONS do
 		Button:SetPoint('LEFT', _G['OverrideActionBarButton' .. index - 1], 'RIGHT', 5, 0)
 	end
 
-	SkinButton('OverrideActionBarButton' .. index)
+	SkinButton(Button)
 end
 
 OverrideActionBar:SetParent(Parent)

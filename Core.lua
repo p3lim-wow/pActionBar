@@ -1,3 +1,5 @@
+local WoD = select(4, GetBuildInfo()) >= 6e4
+
 local FONT = [[Interface\AddOns\pActionBar\semplice.ttf]]
 local TEXTURE = [[Interface\ChatFrame\ChatFrameBackground]]
 local BACKDROP = {
@@ -26,19 +28,19 @@ local function PersistentNormalTexture(self, texture)
 	end
 end
 
-local function SkinButton(name, size)
-	local Button = _G[name]
+local function SkinButton(Button, size)
+	local name = Button:GetName()
 	Button:SetSize(size or 28, size or 28)
 	Button:SetBackdrop(BACKDROP)
 	Button:SetBackdropBorderColor(0, 0, 0)
 
-	local Hotkey = _G[name .. 'HotKey']
+	local HotKey = WoD and Button.HotKey or _G[name .. 'HotKey']
 	local CheckedTexture = Button:GetCheckedTexture()
 	if(size) then
 		Button.cooldown:SetSize(size or 28, size or 28)
 		Button.cooldown:SetAllPoints()
 
-		Hotkey:SetAlpha(0)
+		HotKey:SetAlpha(0)
 
 		hooksecurefunc(Button, 'SetNormalTexture', PersistentNormalTexture)
 
@@ -49,14 +51,18 @@ local function SkinButton(name, size)
 
 		_G[name .. 'AutoCastable']:SetAlpha(0)
 	else
-		Hotkey:ClearAllPoints()
-		Hotkey:SetPoint('BOTTOMRIGHT', 0, 1)
-		Hotkey:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+		HotKey:ClearAllPoints()
+		HotKey:SetPoint('BOTTOMRIGHT', 0, 1)
+		HotKey:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+
+		local NormalTexture = WoD and Button.NormalTexture or _G[name .. 'NormalTexture']
+		NormalTexture:SetTexture(nil)
+		hooksecurefunc(NormalTexture, 'SetVertexColor', UpdateButton)
 
 		CheckedTexture:SetTexture(nil)
 	end
 
-	local Count = _G[name .. 'Count']
+	local Count = WoD and Button.Count or _G[name .. 'Count']
 	Count:ClearAllPoints()
 	Count:SetPoint('TOPLEFT', 1, -1)
 	Count:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
@@ -77,35 +83,35 @@ local function SkinButton(name, size)
 	HighlightTexture:SetPoint('TOPRIGHT', -1, -1)
 	HighlightTexture:SetPoint('BOTTOMLEFT', 1, 1)
 
-	local NormalTexture = _G[name .. 'NormalTexture']
-	if(NormalTexture) then
-		NormalTexture:SetTexture(nil)
-		hooksecurefunc(NormalTexture, 'SetVertexColor', UpdateButton)
-	end
-
 	local FloatingBG = _G[name .. 'FloatingBG']
 	if(FloatingBG) then
 		FloatingBG:Hide()
 	end
 
-	local FlyoutBorder = _G[name .. 'FlyoutBorder']
+	local FlyoutBorder = WoD and Button.FlyoutBorder or _G[name .. 'FlyoutBorder']
 	if(FlyoutBorder) then
 		FlyoutBorder:SetTexture(nil)
 	end
 
-	local FlyoutBorderShadow = _G[name .. 'FlyoutBorderShadow']
+	local FlyoutBorderShadow = WoD and Button.FlyoutBorderShadow or _G[name .. 'FlyoutBorderShadow']
 	if(FlyoutBorderShadow) then
 		FlyoutBorderShadow:SetTexture(nil)
 	end
 
-	_G[name .. 'Border']:SetTexture(nil)
-	_G[name .. 'Name']:Hide()
+	if(WoD) then
+		Button.Border:SetTexture(nil)
+		Button.Name:Hide()
+	else
+		_G[name .. 'Border']:SetTexture(nil)
+		_G[name .. 'Name']:Hide()
+	end
 
 	Button.Skinned = true
 end
 
 local _, ns = ...
 ns.SkinButton = SkinButton
+ns.WoD = WoD
 
 ns.actionButtons = {
 	'ActionButton',
