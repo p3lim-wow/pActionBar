@@ -1,69 +1,57 @@
-local active = {}
-local function CooldownShow(self)
-	active[self] = true
+local WoD = select(2, ...).WoD
+
+local function TimerCallback(self)
+	self.Button.icon:SetAlpha(1)
+
+	if(WoD) then
+		self.Button.Timer = nil
+	else
+		self.Button.__finished = true
+	end
 end
 
-local function CooldownHide(self)
-	active[self] = false
+local stopMethod = WoD and 'Cancel' or 'Stop'
 
-	local Parent = self:GetParent()
-	Parent.icon:SetDesaturated(false)
-	Parent:SetAlpha(1)
-end
+local hooked = {}
+hooksecurefunc('CooldownFrame_SetTimer', function(self, start, duration, _, charges)
+	local Button = self:GetParent()
+	if(not hooked[Button]) then
+		return
+	end
 
-local function CreateTimer(self)
-	local Timer = self:CreateAnimationGroup()
-	Timer:SetLooping('NONE')
-	Timer:SetScript('OnFinished', function() CooldownHide(self) end)
-	Timer:CreateAnimation('Animation'):SetOrder(1)
+	local Timer = Button.Timer
+	if(duration > 2 and charges == 0) then
+		Button.icon:SetAlpha(1/5)
 
-	self.Timer = Timer
-	return Timer
-end
+		if(Timer) then
+			Timer[stopMethod](Timer)
+		end
 
-local Handler = CreateFrame('Frame')
-Handler:RegisterEvent('ACTIONBAR_UPDATE_COOLDOWN')
-Handler:RegisterEvent('PLAYER_LOGIN')
-Handler:SetScript('OnEvent', function()
-	for Cooldown in next, active do
-		local Parent = Cooldown:GetParent()
-		local Timer = Cooldown.Timer
-
-		local _, duration = GetActionCooldown(Parent.action)
-		if(duration >= 2) then
-			Parent.icon:SetDesaturated(true)
-			Parent:SetAlpha(1/2)
-
+		if(WoD) then
+			Timer = C_Timer.NewTimer(start - GetTime() + duration, TimerCallback)
+			Timer.Button = Button
+		else
 			if(not Timer) then
-				Timer = CreateTimer(Cooldown)
-			elseif(Timer:IsPlaying()) then
-				Timer:Stop()
+				Timer = Button:CreateAnimationGroup()
+				Timer:CreateAnimation('Animation'):SetOrder(1)
+				Timer:SetScript('OnFinished', TimerCallback)
+				Timer.Button = Button
 			end
 
-			Timer:GetAnimations():SetDuration(duration)
+			Button.__finished = false
+			Timer:GetAnimations():SetDuration(start - GetTime() + duration)
 			Timer:Play()
-		elseif(Timer and Timer:IsPlaying()) then
-			CooldownHide(Cooldown)
-			Timer:Stop()
 		end
+
+		Button.Timer = Timer
+	elseif((WoD and Timer) or (not WoD and not Button.__finished)) then
+		Timer[stopMethod](Timer)
+		Button.icon:SetAlpha(1)
 	end
 end)
 
-local hooked = {}
-local function RegisterCooldown(self)
-	local cooldown = self.cooldown
-	if(not hooked[cooldown]) then
-		cooldown:HookScript('OnShow', CooldownShow)
-		cooldown:HookScript('OnHide', CooldownHide)
-
-		hooked[cooldown] = true
-	end
-end
-
 if(ActionBarButtonEventsFrame.frames) then
-	for index, frame in next, ActionBarButtonEventsFrame.frames do
-		RegisterCooldown(frame)
+	for index, Button in next, ActionBarButtonEventsFrame.frames do
+		hooked[Button] = true
 	end
 end
-
-hooksecurefunc('ActionBarButtonEventsFrame_RegisterFrame', RegisterCooldown)
