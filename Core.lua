@@ -28,7 +28,7 @@ local function UpdateButton(self)
 	Button.icon:SetVertexColor(1, 1, 1)
 
 	if(not IsUsableAction(action)) then
-		Button.icon:SetVertexColor(0.4, 0.4, 0.4)
+		Button.icon:SetVertexColor(1/4, 1/4, 1/4)
 	else
 		Button.icon:SetVertexColor(1, 1, 1)
 	end
