@@ -44,7 +44,7 @@ hooksecurefunc('CooldownFrame_SetTimer', function(self, start, duration, _, char
 		end
 
 		Button.Timer = Timer
-	elseif((WoD and Timer) or (not WoD and not Button.__finished)) then
+	elseif((WoD and Timer) or (not WoD and (Button.__finished ~= true and Button.__finished ~= nil))) then
 		Timer[stopMethod](Timer)
 		Button.icon:SetAlpha(1)
 	end
