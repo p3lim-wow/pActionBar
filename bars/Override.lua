@@ -24,7 +24,7 @@ OverrideActionBar:EnableMouse(false)
 OverrideActionBar:SetScript('OnShow', nil)
 
 local LeaveButton = CreateFrame('Button', 'pOverrideBarLeave', Parent, 'ActionButtonTemplate, SecureActionButtonTemplate')
-LeaveButton:SetPoint('RIGHT', _G['OverrideActionBarButton' .. NUM_OVERRIDE_BUTTONS], 20, 0)
+LeaveButton:SetPoint('LEFT', _G['OverrideActionBarButton' .. NUM_OVERRIDE_BUTTONS], 'RIGHT', 5, 0)
 LeaveButton:SetAttribute('type', 'macro')
 LeaveButton:SetAttribute('macrotext', '/leavevehicle')
 
