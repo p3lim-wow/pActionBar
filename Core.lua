@@ -74,6 +74,11 @@ local function SkinButton(Button, size, leaveButton)
 		if(CheckedTexture) then
 			CheckedTexture:SetTexture(nil)
 		end
+
+		local NewActionTexture = Button.NewActionTexture
+		if(NewActionTexture) then
+			NewActionTexture:SetTexture(nil)
+		end
 	end
 
 	local Count = WoD and Button.Count or _G[name .. 'Count']
