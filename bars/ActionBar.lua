@@ -12,6 +12,10 @@ RegisterStateDriver(Parent, 'visibility', '[petbattle][overridebar][vehicleui][p
 local visibleButtons = {}
 for _, button in next, actionButtons do
 	visibleButtons[button] = true
+
+	for index = 1, NUM_ACTIONBAR_BUTTONS do
+		SkinButton(_G[button .. index])
+	end
 end
 
 local function UpdatePosition()
@@ -26,10 +30,6 @@ local function UpdatePosition()
 					Button:SetPoint('BOTTOMLEFT', Parent, 2, 33 * (barIndex - 1))
 				else
 					Button:SetPoint('LEFT', _G[buttonName .. index - 1], 'RIGHT', 5, 0)
-				end
-
-				if(not Button.Skinned) then
-					SkinButton(Button)
 				end
 			end
 
