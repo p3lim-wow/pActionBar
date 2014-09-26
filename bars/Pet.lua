@@ -15,7 +15,7 @@ for index = 1, NUM_PET_ACTION_SLOTS do
 		Button:SetPoint('LEFT', _G['PetActionButton' .. index - 1], 'RIGHT', 5, 0)
 	end
 
-	SkinButton(Button, 24)
+	SkinButton(Button, true)
 end
 
 PetActionBarFrame:SetParent(Parent)
