@@ -1,27 +1,41 @@
 local WoD = select(2, ...).WoD
 
 local function TimerCallback(self)
-	self.Button.icon:SetAlpha(1)
+	local Button = self.Button
+	Button.icon:SetAlpha(1)
 
 	if(WoD) then
-		self.Button.Timer = nil
+		Button.Timer = nil
 	else
-		self.Button.__finished = true
+		Button.__finished = true
 	end
 end
 
 local stopMethod = WoD and 'Cancel' or 'Stop'
 
 local hooked = {}
-hooksecurefunc('CooldownFrame_SetTimer', function(self, start, duration, _, charges)
+hooksecurefunc('CooldownFrame_SetTimer', function(self, start, duration, _, charges, _, override)
 	local Button = self:GetParent()
 	if(not hooked[Button]) then
 		return
 	end
 
 	local Timer = Button.Timer
-	if(duration > 2 and charges == 0) then
-		Button.icon:SetAlpha(1/5)
+	if(duration > 2) then
+		if(charges > 0) then
+			if(WoD) then
+				self:SetSwipeColor(0, 0, 0, 0.9)
+				CooldownFrame_SetTimer(self, start, duration, true, 0, 0, true)
+			else
+				return
+			end
+		elseif(not override) then
+			if(WoD) then
+				self:SetSwipeColor(0, 0, 0)
+			end
+
+			Button.icon:SetAlpha(1/5)
+		end
 
 		if(Timer) then
 			Timer[stopMethod](Timer)
