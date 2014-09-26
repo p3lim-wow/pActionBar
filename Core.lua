@@ -53,7 +53,11 @@ local function SkinButton(Button, petButton, leaveButton)
 	Cooldown:SetPoint('CENTER')
 	Cooldown:SetSize(buttonSize - 2, buttonSize - 2)
 
+	local StringParent = CreateFrame('Frame', nil, Button)
+	StringParent:SetFrameLevel(20)
+
 	local HotKey = WoD and Button.HotKey or _G[name .. 'HotKey']
+
 	local CheckedTexture = not leaveButton and Button:GetCheckedTexture()
 	if(petButton) then
 		HotKey:SetAlpha(0)
@@ -67,8 +71,9 @@ local function SkinButton(Button, petButton, leaveButton)
 
 		_G[name .. 'AutoCastable']:SetAlpha(0)
 	else
+		HotKey:SetParent(StringParent)
 		HotKey:ClearAllPoints()
-		HotKey:SetPoint('BOTTOMRIGHT', 0, 1)
+		HotKey:SetPoint('BOTTOMRIGHT', Button, 0, 1)
 		HotKey:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
 
 		local NormalTexture = WoD and Button.NormalTexture or _G[name .. 'NormalTexture']
@@ -86,8 +91,9 @@ local function SkinButton(Button, petButton, leaveButton)
 	end
 
 	local Count = WoD and Button.Count or _G[name .. 'Count']
+	Count:SetParent(StringParent)
 	Count:ClearAllPoints()
-	Count:SetPoint('TOPLEFT', 1, -1)
+	Count:SetPoint('TOPLEFT', Button, 1, -1)
 	Count:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
 
 	local Icon = Button.icon
