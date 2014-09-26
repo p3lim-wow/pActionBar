@@ -93,8 +93,9 @@ local function SkinButton(Button, petButton, leaveButton)
 	local Count = WoD and Button.Count or _G[name .. 'Count']
 	Count:SetParent(StringParent)
 	Count:ClearAllPoints()
-	Count:SetPoint('TOPLEFT', Button, 1, -1)
+	Count:SetPoint('TOPLEFT', Button, 3, -3)
 	Count:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
+	Count:SetJustifyH('LEFT')
 
 	local Icon = Button.icon
 	Icon:SetTexCoord(0.08, 0.92, 0.08, 0.92)
