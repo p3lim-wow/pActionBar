@@ -1,17 +1,8 @@
-local WoD = select(2, ...).WoD
-
 local function TimerCallback(self)
 	local Button = self.Button
 	Button.icon:SetAlpha(1)
-
-	if(WoD) then
-		Button.Timer = nil
-	else
-		Button.__finished = true
-	end
+	Button.Timer = nil
 end
-
-local stopMethod = WoD and 'Cancel' or 'Stop'
 
 local hooked = {}
 hooksecurefunc('CooldownFrame_SetTimer', function(self, start, duration, _, charges, _, override)
@@ -23,43 +14,23 @@ hooksecurefunc('CooldownFrame_SetTimer', function(self, start, duration, _, char
 	local Timer = Button.Timer
 	if(duration > 2) then
 		if(charges and charges > 0) then
-			if(WoD) then
-				self:SetSwipeColor(0, 0, 0, 0.9)
-				CooldownFrame_SetTimer(self, start, duration, true, 0, 0, true)
-			else
-				return
-			end
+			self:SetSwipeColor(0, 0, 0, 0.9)
+			CooldownFrame_SetTimer(self, start, duration, true, 0, 0, true)
 		elseif(not override) then
-			if(WoD) then
-				self:SetSwipeColor(0, 0, 0)
-			end
-
+			self:SetSwipeColor(0, 0, 0)
 			Button.icon:SetAlpha(1/5)
 		end
 
 		if(Timer) then
-			Timer[stopMethod](Timer)
+			Timer:Cancel()
 		end
 
-		if(WoD) then
-			Timer = C_Timer.NewTimer(start - GetTime() + duration, TimerCallback)
-			Timer.Button = Button
-		else
-			if(not Timer) then
-				Timer = Button:CreateAnimationGroup()
-				Timer:CreateAnimation('Animation'):SetOrder(1)
-				Timer:SetScript('OnFinished', TimerCallback)
-				Timer.Button = Button
-			end
-
-			Button.__finished = false
-			Timer:GetAnimations():SetDuration(start - GetTime() + duration)
-			Timer:Play()
-		end
+		Timer = C_Timer.NewTimer(start - GetTime() + duration, TimerCallback)
+		Timer.Button = Button
 
 		Button.Timer = Timer
-	elseif((WoD and Timer) or (not WoD and (Button.__finished ~= true and Button.__finished ~= nil))) then
-		Timer[stopMethod](Timer)
+	elseif(Timer) then
+		Timer:Cancel()
 		Button.icon:SetAlpha(1)
 	end
 end)

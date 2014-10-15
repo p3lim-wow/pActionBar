@@ -50,22 +50,11 @@ for _, frame in next, {
 	_G[frame]:EnableMouse(false)
 end
 
-if(ns.WoD) then
-	hooksecurefunc('SetActionBarToggles', function(bar2, bar3, bar4, bar5)
-		visibleButtons.MultiBarBottomLeftButton = bar2
-		visibleButtons.MultiBarBottomRightButton = bar3
-		visibleButtons.MultiBarRightButton = bar4
-		visibleButtons.MultiBarLeftButton = bar5 and bar4
+hooksecurefunc('SetActionBarToggles', function(bar2, bar3, bar4, bar5)
+	visibleButtons.MultiBarBottomLeftButton = bar2
+	visibleButtons.MultiBarBottomRightButton = bar3
+	visibleButtons.MultiBarRightButton = bar4
+	visibleButtons.MultiBarLeftButton = bar5 and bar4
 
-		UpdatePosition()
-	end)
-else
-	hooksecurefunc('SetActionBarToggles', function(bar2, bar3, bar4, bar5)
-		visibleButtons.MultiBarBottomLeftButton = bar2 == '1'
-		visibleButtons.MultiBarBottomRightButton = bar3 == '1'
-		visibleButtons.MultiBarRightButton = bar4 == '1'
-		visibleButtons.MultiBarLeftButton = bar5 == '1' and bar4 == '1'
-
-		UpdatePosition()
-	end)
-end
+	UpdatePosition()
+end)

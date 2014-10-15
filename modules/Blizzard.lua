@@ -36,11 +36,6 @@ for _, frame in next, {
 	_G[frame].SetParent = null
 end
 
-if(not select(2, ...).WoD) then
-	PVPMicroButton:SetParent(Hider)
-	PVPMicroButton.SetParent = null
-end
-
 for _, texture in next, {
 	'StanceBarLeft',
 	'StanceBarMiddle',

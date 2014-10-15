@@ -22,7 +22,7 @@ Handler:SetScript('OnEvent', function()
 		for index = 1, NUM_ACTIONBAR_BUTTONS do
 			local Button = _G[name .. index]
 			if(Button) then
-				local HotKey = ns.WoD and Button.HotKey or _G[name .. index .. 'HotKey']
+				local HotKey = Button.HotKey
 				if(HotKey) then
 					HotKey:SetText(CleanKey(HotKey:GetText()) or '')
 				end

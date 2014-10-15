@@ -1,5 +1,3 @@
-local WoD = select(4, GetBuildInfo()) >= 6e4
-
 local FONT = [[Interface\AddOns\pActionBar\semplice.ttf]]
 local TEXTURE = [[Interface\ChatFrame\ChatFrameBackground]]
 local BACKDROP = {
@@ -15,10 +13,7 @@ Handler:SetScript('OnEvent', function()
 	SetCVar('lockActionBars', 1)
 	SetCVar('alwaysShowActionBars', 0)
 	SetCVar('secureAbilityToggle', 1)
-
-	if(WoD) then
-		SetCVar('countdownForCooldowns', 0)
-	end
+	SetCVar('countdownForCooldowns', 0)
 end)
 
 local function UpdateButton(self)
@@ -56,7 +51,7 @@ local function SkinButton(Button, petButton, leaveButton)
 	local StringParent = CreateFrame('Frame', nil, Button)
 	StringParent:SetFrameLevel(20)
 
-	local HotKey = WoD and Button.HotKey or _G[name .. 'HotKey']
+	local HotKey = Button.HotKey
 
 	local CheckedTexture = not leaveButton and Button:GetCheckedTexture()
 	if(petButton) then
@@ -76,7 +71,7 @@ local function SkinButton(Button, petButton, leaveButton)
 		HotKey:SetPoint('BOTTOMRIGHT', Button, 0, 1)
 		HotKey:SetFont(FONT, 8, 'OUTLINEMONOCHROME')
 
-		local NormalTexture = WoD and Button.NormalTexture or _G[name .. 'NormalTexture']
+		local NormalTexture = Button.NormalTexture
 		NormalTexture:SetTexture(nil)
 		hooksecurefunc(NormalTexture, 'SetVertexColor', UpdateButton)
 
@@ -90,7 +85,7 @@ local function SkinButton(Button, petButton, leaveButton)
 		end
 	end
 
-	local Count = WoD and Button.Count or _G[name .. 'Count']
+	local Count = Button.Count
 	Count:SetParent(StringParent)
 	Count:ClearAllPoints()
 	Count:SetPoint('TOPLEFT', Button, 3, -3)
@@ -113,7 +108,7 @@ local function SkinButton(Button, petButton, leaveButton)
 	HighlightTexture:SetPoint('TOPRIGHT', -1, -1)
 	HighlightTexture:SetPoint('BOTTOMLEFT', 1, 1)
 
-	local Flash = WoD and Button.Flash or _G[name .. 'Flash']
+	local Flash = Button.Flash
 	Flash:SetTexture(1, 0, 0, 1/3)
 	Flash:ClearAllPoints()
 	Flash:SetPoint('TOPRIGHT', -1, -1)
@@ -124,30 +119,24 @@ local function SkinButton(Button, petButton, leaveButton)
 		FloatingBG:Hide()
 	end
 
-	local FlyoutBorder = WoD and Button.FlyoutBorder or _G[name .. 'FlyoutBorder']
+	local FlyoutBorder = Button.FlyoutBorder
 	if(FlyoutBorder) then
 		FlyoutBorder:SetTexture(nil)
 	end
 
-	local FlyoutBorderShadow = WoD and Button.FlyoutBorderShadow or _G[name .. 'FlyoutBorderShadow']
+	local FlyoutBorderShadow = Button.FlyoutBorderShadow
 	if(FlyoutBorderShadow) then
 		FlyoutBorderShadow:SetTexture(nil)
 	end
 
-	if(WoD) then
-		Button.Border:SetTexture(nil)
-		Button.Name:Hide()
-	else
-		_G[name .. 'Border']:SetTexture(nil)
-		_G[name .. 'Name']:Hide()
-	end
+	Button.Border:SetTexture(nil)
+	Button.Name:Hide()
 
 	Button.Skinned = true
 end
 
 local _, ns = ...
 ns.SkinButton = SkinButton
-ns.WoD = WoD
 
 ns.actionButtons = {
 	'ActionButton',
