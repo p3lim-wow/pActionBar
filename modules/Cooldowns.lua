@@ -22,7 +22,7 @@ hooksecurefunc('CooldownFrame_SetTimer', function(self, start, duration, _, char
 
 	local Timer = Button.Timer
 	if(duration > 2) then
-		if(charges > 0) then
+		if(charges and charges > 0) then
 			if(WoD) then
 				self:SetSwipeColor(0, 0, 0, 0.9)
 				CooldownFrame_SetTimer(self, start, duration, true, 0, 0, true)
