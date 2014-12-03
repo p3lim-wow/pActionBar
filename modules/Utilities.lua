@@ -1,6 +1,6 @@
 
 local function OnClick(self, ...)
-	if(CursorHasItem()) then
+	if(CursorHasItem() and not InCombatLockdown()) then
 		PutItemInBag(self:GetID() + 19)
 	elseif(self.origOnClick) then
 		self.origOnClick(self, ...)
