@@ -1,7 +1,7 @@
 local Hider = CreateFrame('Frame', 'pActionBarHider')
 Hider:Hide()
 
-local function null() end
+local function noop() end
 
 for _, frame in next, {
 	'MainMenuBar',
@@ -21,7 +21,7 @@ for _, frame in next, {
 	'GuildMicroButton',
 	'LFDMicroButton',
 	'StoreMicroButton',
-	'CompanionsMicroButton',
+	'CollectionsMicroButton',
 	'EJMicroButton',
 	'MainMenuMicroButton',
 	'HelpMicroButton',
@@ -33,7 +33,7 @@ for _, frame in next, {
 	'StanceBarFrame',
 } do
 	_G[frame]:SetParent(Hider)
-	_G[frame].SetParent = null
+	_G[frame].SetParent = noop
 end
 
 for _, texture in next, {

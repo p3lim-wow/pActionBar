@@ -5,8 +5,6 @@ local BACKDROP = {
 	insets = {left = 1, right = 1, top = 1, bottom = 1},
 }
 
-local function null() end
-
 local Handler = CreateFrame('Frame')
 Handler:RegisterEvent('PLAYER_LOGIN')
 Handler:SetScript('OnEvent', function()
@@ -18,11 +16,7 @@ end)
 
 local function UpdateButton(self)
 	local Button = self:GetParent()
-	local action = Button.action
-
-	Button.icon:SetVertexColor(1, 1, 1)
-
-	if(not IsUsableAction(action)) then
+	if(not IsUsableAction(Button.action)) then
 		Button.icon:SetVertexColor(1/4, 1/4, 1/4)
 	else
 		Button.icon:SetVertexColor(1, 1, 1)
@@ -51,11 +45,9 @@ local function SkinButton(Button, petButton, leaveButton)
 	local StringParent = CreateFrame('Frame', nil, Button)
 	StringParent:SetFrameLevel(20)
 
-	local HotKey = Button.HotKey
-
 	local CheckedTexture = not leaveButton and Button:GetCheckedTexture()
 	if(petButton) then
-		HotKey:SetAlpha(0)
+		Button.HotKey:SetAlpha(0)
 
 		hooksecurefunc(Button, 'SetNormalTexture', PersistentNormalTexture)
 
@@ -66,6 +58,7 @@ local function SkinButton(Button, petButton, leaveButton)
 
 		_G[name .. 'AutoCastable']:SetAlpha(0)
 	else
+		local HotKey = Button.HotKey
 		HotKey:SetParent(StringParent)
 		HotKey:ClearAllPoints()
 		HotKey:SetPoint('BOTTOMRIGHT', Button, 0, 1)

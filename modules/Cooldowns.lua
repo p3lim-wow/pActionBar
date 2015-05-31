@@ -25,7 +25,7 @@ hooksecurefunc('CooldownFrame_SetTimer', function(self, start, duration, _, char
 			Timer:Cancel()
 		end
 
-		Timer = C_Timer.NewTimer(start - GetTime() + duration, TimerCallback)
+		Timer = C_Timer.NewTimer(math.max(0, start - GetTime() + duration), TimerCallback)
 		Timer.Button = Button
 
 		Button.Timer = Timer

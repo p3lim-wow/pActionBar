@@ -9,7 +9,6 @@ Core.lua
 modules\Blizzard.lua
 modules\Cooldowns.lua
 modules\Bindings.lua
-modules\Utilities.lua
 
 bars\ActionBar.lua
 bars\Override.lua
