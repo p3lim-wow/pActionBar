@@ -9,6 +9,7 @@ local function CleanKey(key)
 		key = gsub(key, '%-', '')
 		key = gsub(key, 'MOUSEBUTTON', 'B')
 		key = gsub(key, 'MIDDLEMOUSE', 'MM')
+		key = gsub(key, 'BACKSPACE', 'BS')
 
 		return key
 	end
