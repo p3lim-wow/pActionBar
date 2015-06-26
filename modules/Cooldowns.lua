@@ -1,37 +1,44 @@
 local function TimerCallback(self)
-	local Button = self.Button
-	Button.icon:SetAlpha(1)
-	Button.Timer = nil
+	local parent = self.parent
+	parent.icon:SetAlpha(1)
+	parent._timer = nil
 end
 
 local hooked = {}
-hooksecurefunc('CooldownFrame_SetTimer', function(self, start, duration, _, charges, _, override)
-	local Button = self:GetParent()
-	if(not hooked[Button]) then
+hooksecurefunc('CooldownFrame_SetTimer', function(self, start, duration, enabled, forceShowDrawEdge)
+	local parent = self:GetParent()
+	if(not hooked[parent]) then
 		return
 	end
 
-	local Timer = Button.Timer
+	local _timer = parent._timer
 	if(duration > 2) then
-		if(charges and charges > 0) then
-			self:SetSwipeColor(0, 0, 0, 0.9)
-			CooldownFrame_SetTimer(self, start, duration, true, 0, 0, true)
-		elseif(not override) then
+		if(not forceShowDrawEdge) then
 			self:SetSwipeColor(0, 0, 0)
-			Button.icon:SetAlpha(1/5)
+			parent.icon:SetAlpha(1/5)
 		end
 
-		if(Timer) then
-			Timer:Cancel()
+		if(_timer) then
+			_timer:Cancel()
 		end
 
-		Timer = C_Timer.NewTimer(math.max(0, start - GetTime() + duration), TimerCallback)
-		Timer.Button = Button
+		_timer = C_Timer.NewTimer(math.max(0, start - GetTime() + duration), TimerCallback)
+		_timer.parent = parent
 
-		Button.Timer = Timer
-	elseif(Timer) then
-		Timer:Cancel()
-		Button.icon:SetAlpha(1)
+		parent._timer = _timer
+	elseif(_timer) then
+		_timer:Cancel()
+		parent.icon:SetAlpha(1)
+	end
+end)
+
+hooksecurefunc('StartChargeCooldown', function(parent, start, duration)
+	if(hooked[parent] and not parent._chargeStyle) then
+		local cooldown = parent.chargeCooldown
+		cooldown:SetDrawEdge(false)
+		cooldown:SetDrawSwipe(true)
+		cooldown:SetSwipeColor(0, 0, 0, 0.9)
+		parent._chargeStyle = true
 	end
 end)
 
