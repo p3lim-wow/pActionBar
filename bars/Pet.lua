@@ -2,7 +2,7 @@ local Parent = CreateFrame('Frame', 'pPetBar', UIParent, 'SecureHandlerStateTemp
 Parent:SetPoint('BOTTOM', pActionBar, 'TOP')
 Parent:SetSize(290, 29)
 
-RegisterStateDriver(Parent, 'visibility', '[petbattle][overridebar][vehicleui][possessbar,@vehicle,exists] hide; [@pet,exists,nomounted] show; hide')
+RegisterStateDriver(Parent, 'visibility', '[petbattle][overridebar][vehicleui][possessbar,@vehicle,exists] hide; [@pet,exists] show; hide')
 
 local SkinButton = select(2, ...).SkinButton
 for index = 1, NUM_PET_ACTION_SLOTS do
